@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
 </head>
@@ -17,5 +18,43 @@
             <h1 class="text-5xl font-bold text-white">ADA COMICS</h1>
         </div>
     </header>
+
+    <main class="bg-gradient-to-r from-yellow-200 to-yellow-400 min-h-screen p-6">
+        <div class="search">
+            <h2 class="text-4xl font-bold mb-4 mt-8 ml-8">Búsqueda</h2> 
+            <div class="container-search flex flex-col md:flex-col lg:flex-row pr-4 md:p-0">
+                <!-- input busqueda -->
+                <div class="input-search-container md:pr-0 pr-4 mr-8 ">
+                  <i class="fas fa-search w-5 h-5 text-xl mr-2"></i>
+                  <input class="w-full md:w-3/4 px-2" type="text" name="input-search" id="input-search" placeholder="Ingresá tu búsqueda" />
+                </div>
+      
+                <!-- selectores y botón -->
+                <div class="input-search-container no-change-color md:pr-0 pr-4">
+                  <div class="filter-container ml-8 mt-10 md:mt-10 lg:mt-3 flex items-center flex-col md:flex-row md:pr-0 pr-6">
+                    <div class="pb-3  ml-32">
+                      <label for="type">TIPO</label>
+                      <select class="sort-gral sort-type" name="type" id="marvel-select">
+                        <option value="COMICS" selected>COMICS</option>
+                        <option value="PERSONAJES">PERSONAJES</option>
+                      </select>
+                    </div>
+                    <div class="pb-3 ml-8">
+                      <label for="order">ORDEN</label>
+                      <select class="sort-gral" name="order" id="sort-order">
+                        <option value="A-Z">A-Z</option>
+                        <option value="Z-A">Z-A</option>
+                        <option value="Z-A">Mas nuevos</option>
+                        <option value="Z-A">Mas viejos</option>
+                      </select>
+                    </div>
+                    <button id="btn-search" class="btn-search mb-5">BUSCAR</button>
+                  </div>
+                </div>
+              </div>
+
+        </div>
+
+    </main>
 </body>
 </html>
