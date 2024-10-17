@@ -92,3 +92,48 @@ const search = async () => {
         }
     }
 };;
+
+//Función que muestra las tarjetas de los cómics
+const appendComics = (comics) => {
+    const resultsContainer = $('.results');
+    resultsContainer.innerHTML = ''; // Limpiar resultados anteriores
+    if (comics.length === 0) {
+        resultsContainer.innerHTML = '<h2 class="no-results text-red-600">No se han encontrado resultados</h2>';
+        return;
+    }
+
+    comics.forEach((comic) => {
+        const comicCard = document.createElement('div');
+        comicCard.classList.add('bg-white', 'rounded-lg', 'shadow-lg', 'p-4', 'w-64', 'transition-transform',  'duration-300', 'transform', 'hover:scale-105', 'hover:shadow-2xl'); // Ajusta el tamaño según el viewport
+        comicCard.innerHTML = `
+            <div class="bg-gray-200 p-2 rounded-t-lg">
+                <img src="${comic.thumbnail.path}/portrait_uncanny.${comic.thumbnail.extension}" alt="${comic.title}" class="w-full h-72 object-fit rounded-lg" />
+            </div>
+            <h3 class="text-center text-md font-bold mt-2">${comic.title}</h3>
+        `;
+        resultsContainer.append(comicCard);
+    });
+};;
+
+// Limpia los resultados previamente mostrados en el contenedor de resultados.
+const clearResults = () => {
+    const resultsContainer = $('.results');
+    resultsContainer.innerHTML = '';
+};
+//Actualiza la visualización del número de resultados encontrados.
+const updateResultsCount = (count) => {
+    $('.results-number').innerHTML = count;
+    resultsCount = count;
+};
+  
+// Añadir el evento al botón de búsqueda
+$('#btn-search').onclick = () => {
+    search();
+};
+  
+//carga al iniciar
+document.addEventListener('DOMContentLoaded', async () => {
+    $('#marvel-select').value = 'COMICS'; 
+    await search(); // Llama a la función de búsqueda para cargar cómics
+});
+  
