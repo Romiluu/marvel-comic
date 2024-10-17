@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
 </head>
@@ -42,19 +43,19 @@
                     <div class="pb-3 ml-8">
                       <label for="order">ORDEN</label>
                       <select class="sort-gral" name="order" id="sort-order">
-                        <option value="A-Z">A-Z</option>
-                        <option value="Z-A">Z-A</option>
-                        <option value="Z-A">Mas nuevos</option>
-                        <option value="Z-A">Mas viejos</option>
+                        <option value="title">A-Z</option>
+                        <option value="-title">Z-A</option>
+                        <option value="-onsaleDate">Más nuevos</option>
+                        <option value="onsaleDate">Más viejos</option>
+                    </select>>
                       </select>
                     </div>
                     <button id="btn-search" class="btn-search mb-5">BUSCAR</button>
                   </div>
                 </div>
               </div>
-
         </div>
-
-    </main>
+</main>   
+    <script src="main.js"></script>
 </body>
 </html>
