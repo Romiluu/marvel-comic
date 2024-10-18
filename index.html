@@ -57,32 +57,6 @@
         </div>
 
         <div>
-            <!-- resultado busquedas  -->
-                <section class="results-section mt-10">
-                    <h2 class="text-4xl font-bold mb-4">Resultados</h2> 
-                    <p class="text-center text-lg font-bold mb-4">
-                        <span class="results-number">0</span> RESULTADOS
-                    </p>
-                    <div class="results flex flex-wrap justify-center gap-6 p-5">
-                    <!-- Aquí se insertan las tarjetas de cómics -->
-                    </div>
-                    <!-- Contenedor de Paginación -->
-                    <div id="pagination" class="flex justify-center items-center gap-2 pt-4">
-                        <button id="first-page" class="bg-black text-white p-2 hover:bg-gray-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
-                            <i class="fas fa-angle-double-left text-2xl"></i>
-                        </button>
-                        <button id="previous-page" class="bg-black text-white p-2 hover:bg-gray-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
-                            <i class="fas fa-angle-left text-2xl"></i>
-                        </button>
-                        <button id="next-page" class="bg-black text-white p-2 hover:bg-gray-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
-                            <i class="fas fa-angle-right text-2xl"></i>
-                        </button>
-                        <button id="last-page" class="bg-black text-white p-2 hover:bg-gray-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
-                            <i class="fas fa-angle-double-right text-2xl"></i>
-                        </button>
-                    </div>
-                </section>
-
                 <!-- detalle de comics -->
                 <section class="comic-section hidden justify-center mt-20" id="comic-details"> 
                     <div class="flex flex-col md:flex-row justify-center">
@@ -109,6 +83,43 @@
                         </div>
                     </div>
                 </section>
+
+                <!-- detalles del personaje  -->
+                <section class="comic-section hidden justify-center mt-20" id="character-details">
+                    <div  class="flex flex-col md:flex-row justify-center">
+                        <img id="character-image" alt="Character Image" class="w-80 h-auto object-cover rounded-lg shadow-md" />
+                        <h2 class="text-2xl font-bold" id="character-name"></h2>
+                        <p class="comic-description text-gray-700" id="character-description"></p>
+                    </div>
+
+                </section>
+
+                <!-- resultado busquedas  -->
+                <section class="results-section mt-10">
+                    <h2 class="text-4xl font-bold mb-4">Resultados</h2> 
+                    <p class="text-center text-lg font-bold mb-4">
+                        <span class="results-number">0</span> RESULTADOS
+                    </p>
+                    <div class="results flex flex-wrap justify-center gap-6 p-5">
+                    <!-- Aquí se insertan las tarjetas de cómics -->
+                    </div>
+                    <!-- Contenedor de Paginación -->
+                    <div id="pagination" class="flex justify-center items-center gap-2 pt-4">
+                        <button id="first-page" class="bg-black text-white p-2 hover:bg-gray-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-angle-double-left text-2xl"></i>
+                        </button>
+                        <button id="previous-page" class="bg-black text-white p-2 hover:bg-gray-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-angle-left text-2xl"></i>
+                        </button>
+                        <button id="next-page" class="bg-black text-white p-2 hover:bg-gray-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-angle-right text-2xl"></i>
+                        </button>
+                        <button id="last-page" class="bg-black text-white p-2 hover:bg-gray-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-angle-double-right text-2xl"></i>
+                        </button>
+                    </div>
+                </section>
+
         </div>
 </main>   
     <script src="main.js"></script>
