@@ -59,29 +59,56 @@
         <div>
             <!-- resultado busquedas  -->
                 <section class="results-section mt-10">
-                <h2 class="text-4xl font-bold mb-4">Resultados</h2> 
-                <p class="text-center text-lg font-bold mb-4">
-                    <span class="results-number">0</span> RESULTADOS
-                </p>
-                <div class="results flex flex-wrap justify-center gap-6 p-5">
+                    <h2 class="text-4xl font-bold mb-4">Resultados</h2> 
+                    <p class="text-center text-lg font-bold mb-4">
+                        <span class="results-number">0</span> RESULTADOS
+                    </p>
+                    <div class="results flex flex-wrap justify-center gap-6 p-5">
                     <!-- Aquí se insertan las tarjetas de cómics -->
-                </div>
-                <!-- Contenedor de Paginación -->
-                <div id="pagination" class="flex justify-center items-center gap-2 pt-4">
-                    <button id="first-page" class="bg-black text-white p-2 hover:bg-gray-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
-                        <i class="fas fa-angle-double-left text-2xl"></i>
-                    </button>
-                    <button id="previous-page" class="bg-black text-white p-2 hover:bg-gray-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
-                        <i class="fas fa-angle-left text-2xl"></i>
-                    </button>
-                    <button id="next-page" class="bg-black text-white p-2 hover:bg-gray-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
-                        <i class="fas fa-angle-right text-2xl"></i>
-                    </button>
-                    <button id="last-page" class="bg-black text-white p-2 hover:bg-gray-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
-                        <i class="fas fa-angle-double-right text-2xl"></i>
-                    </button>
-                </div>
-            </section>
+                    </div>
+                    <!-- Contenedor de Paginación -->
+                    <div id="pagination" class="flex justify-center items-center gap-2 pt-4">
+                        <button id="first-page" class="bg-black text-white p-2 hover:bg-gray-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-angle-double-left text-2xl"></i>
+                        </button>
+                        <button id="previous-page" class="bg-black text-white p-2 hover:bg-gray-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-angle-left text-2xl"></i>
+                        </button>
+                        <button id="next-page" class="bg-black text-white p-2 hover:bg-gray-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-angle-right text-2xl"></i>
+                        </button>
+                        <button id="last-page" class="bg-black text-white p-2 hover:bg-gray-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-angle-double-right text-2xl"></i>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- detalle de comics -->
+                <section class="comic-section hidden justify-center mt-20" id="comic-details"> 
+                    <div class="flex flex-col md:flex-row justify-center">
+                        <img src="" alt="Comic Cover" id="comic-image" class="comic-cover w-80 h-auto object-cover rounded-lg shadow-md" />
+                        <div class="comic-details mt-4 md:mt-0 md:ml-12">
+                            <h2 class="comic-title text-2xl font-semibold" id="comic-title"></h2> 
+                            <div class="mt-2">
+                                <h3 class="text-lg font-semibold">Publicado:</h3>
+                                <p class="comic-published text-gray-700" id="comic-publication"></p> 
+                            </div>
+                            <div class="mt-2">
+                                <h3 class="text-lg font-semibold">Guionistas:</h3>
+                                <p class="comic-writers text-gray-700" id="comic-writers"></p> 
+                            </div>
+                            <div class="mt-2">
+                                <h3 class="text-lg font-semibold">Descripción:</h3>
+                                <p class="comic-description text-gray-700" id="comic-description"></p> 
+                            </div>
+                            <div class="comic-characters mt-4 ">
+                                <h3 class="text-lg font-semibold mb-4">Personajes</h3>
+                                <p class="character-count"></p>
+                                <div class="character-cards flex flex-wrap gap-4"></div>
+                            </div>  
+                        </div>
+                    </div>
+                </section>
         </div>
 </main>   
     <script src="main.js"></script>

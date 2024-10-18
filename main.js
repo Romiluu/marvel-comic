@@ -121,6 +121,10 @@ const appendComics = (comics) => {
             </div>
             <h3 class="text-center text-md font-bold mt-2">${comic.title}</h3>
         `;
+
+        // Añadir evento de clic para mostrar detalles
+        comicCard.addEventListener('click', () => showComicDetails(comic.id));
+        
         resultsContainer.append(comicCard);
     });
 };;
@@ -151,7 +155,45 @@ const appendCharacters = (characters) => {
   
       resultsContainer.append(characterCard);
     }
-  };
+};
+
+//muestra detalles del comic
+async function showComicDetails(comicId) {
+    const comic = await fetchComic(comicId);
+    if (comic) {
+        updateComicDetails(comic);
+    } else {
+        console.error('No se pudo obtener los detalles del cómic');
+    }
+}
+
+function updateComicDetails(comic) {
+    // Actualiza los detalles del cómic
+    $('#comic-title').innerText = comic.title;
+    $('#comic-description').innerText = comic.description || 'Descripción no disponible';
+    $('#comic-image').src = `${comic.thumbnail.path}/portrait_uncanny.${comic.thumbnail.extension}`;
+    
+    // Añadir publicación y guionistas
+    $('#comic-publication').innerText = `Publicado: ${comic.dates[0].date}`; // Asegúrate de que comic.dates tenga la información adecuada
+    $('#comic-writers').innerText = `Guionistas: ${comic.creators.items.map(item => item.name).join(', ') || 'No disponible'}`;
+    
+    // Mostrar detalles
+    $('#comic-details').classList.remove('hidden'); // Asegúrate de mostrar la sección al cargar los detalles
+}
+
+async function fetchComic(comicId) {
+    try {
+        const url = `${apiUrl}comics/${comicId}?apikey=${publicKey}&ts=${ts}&hash=${hash}`;
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Error al obtener los detalles del cómic');
+        }
+        const data = await response.json();
+        return data.data.results[0];  // Suponiendo que la API devuelve una lista de resultados
+    } catch (error) {
+        console.error('Hubo un problema con la solicitud: ', error);
+    }
+}
 
 // Limpia los resultados previamente mostrados en el contenedor de resultados.
 const clearResults = () => {
