@@ -165,10 +165,10 @@ async function showComicDetails(comicId) {
         clearResults(); // Limpia los resultados
         updateComicDetails(comic);
         
-        // Oculta la sección de resultados
-        const resultsSection = document.querySelector('.results');
-        if (resultsSection) {
-            resultsSection.classList.add('hidden'); // Añade la clase hidden para ocultar
+        // Oculta la sección de detalles del personaje
+        const characterDetailsSection = document.getElementById('character-details');
+        if (characterDetailsSection) {
+            characterDetailsSection.classList.add('hidden'); // Añade la clase hidden para ocultar
         }
         
         // Muestra los detalles del cómic
@@ -190,6 +190,9 @@ async function showCharacterDetails(characterId) {
         
         const characterDetailsSection = $('#character-details');
         characterDetailsSection.classList.remove('hidden');
+
+        const comicDetailsSection = $('#comic-details'); // Asegúrate de tener el ID correcto para la sección de cómics
+        comicDetailsSection.classList.add('hidden'); // Oculta la sección de detalles del cómic
 
         
         fetchRelatedComics(characterId);
