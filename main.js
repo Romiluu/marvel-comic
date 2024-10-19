@@ -150,6 +150,9 @@ const appendCharacters = (characters) => {
             <h3 class="text-lg font-semibold">${character.name}</h3>
         `; 
 
+        
+    characterCard.addEventListener('click', () => showCharacterDetails(character.id));
+
         resultsContainer.appendChild(characterCard);
     });
 };
@@ -185,16 +188,26 @@ async function showCharacterDetails(characterId) {
         clearResults();
         updateCharacterDetails(character);
         
-        const resultsSection = $('.results');
-        resultsSection.classList.add('hidden');
-        
         const characterDetailsSection = $('#character-details');
         characterDetailsSection.classList.remove('hidden');
+
+        
+        fetchRelatedComics(characterId);
     } else {
         console.error('No se pudo obtener los detalles del personaje');
     }
 }
 
+// Función para buscar cómics en los que aparece el personaje
+const fetchRelatedComics = async (characterId) => {
+    const url = `${apiUrl}characters/${characterId}/comics?apikey=${publicKey}&ts=${ts}&hash=${hash}`;
+    const comicsData = await fetchURL(url);
+
+    if (comicsData) {
+        appendComics(comicsData.data.results); // Aquí se deben mostrar los cómics
+        updateResultsCount(comicsData.data.total);
+    }
+};
 // Actualiza los detalles del cómic
 function updateComicDetails(comic) {
     // Actualiza los detalles del cómic
