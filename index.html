@@ -47,7 +47,6 @@
                         <option value="-title">Z-A</option>
                         <option value="-onsaleDate">Más nuevos</option>
                         <option value="onsaleDate">Más viejos</option>
-                    </select>
                       </select>
                     </div>
                     <button id="btn-search" class="btn-search mb-5">BUSCAR</button>
@@ -97,6 +96,12 @@
 
                 <!-- resultado busquedas  -->
                 <section class="results-section mt-10">
+                     <!-- LOADER -->
+                     <div class="custom-container hidden">
+                        <div class="loader-container">
+                          <div class="custom-loader"></div>
+                        </div>
+                    </div>
                     <h2 class="text-4xl font-bold mb-4">Resultados</h2> 
                     <p class="text-center text-lg font-bold mb-4">
                         <span class="results-number">0</span> RESULTADOS
@@ -119,8 +124,8 @@
                             <i class="fas fa-angle-double-right text-2xl"></i>
                         </button>
                     </div>
+                   
                 </section>
-
         </div>
     </main>
     <footer class="footer-comic">
