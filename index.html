@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
@@ -16,7 +17,7 @@
         </div>
         <!-- Contenedor del título con degradado -->
         <div class="relative bg-red-600 p-4 rounded-full">
-            <h1 class="text-5xl font-bold text-white">ADA COMICS</h1>
+            <h1 class="text-5xl font-bold text-white" style="font-family: 'Bangers', cursive;">ADA COMICS</h1>
         </div>
     </header>
 
@@ -25,35 +26,37 @@
             <h2 class="text-4xl font-bold mb-4 mt-8 ml-8">Búsqueda</h2> 
             <div class="container-search flex flex-col md:flex-col lg:flex-row pr-4 md:p-0">
                 <!-- input busqueda -->
-                <div class="input-search-container md:pr-0 pr-4 mr-8 ">
-                  <i class="fas fa-search w-5 h-5 text-xl mr-2"></i>
-                  <input class="w-full md:w-3/4 px-2" type="text" name="input-search" id="input-search" placeholder="Ingresá tu búsqueda" />
+                <div class="input-search-container md:pr-0 pr-4 mr-8">
+                    <i class="fas fa-search w-5 h-5 text-xl mr-2"></i>
+                    <input class="w-full md:w-3/4 px-2" type="text" name="input-search" id="input-search" placeholder="Ingresá tu búsqueda" />
                 </div>
-      
+          
                 <!-- selectores y botón -->
-                <div class="input-search-container no-change-color md:pr-0 pr-4">
-                  <div class="filter-container ml-8 mt-10 md:mt-10 lg:mt-3 flex items-center flex-col md:flex-row md:pr-0 pr-6">
-                    <div class="pb-3  ml-32">
-                      <label for="type">TIPO</label>
-                      <select class="sort-gral sort-type" name="type" id="marvel-select">
-                        <option value="COMICS" selected>COMICS</option>
-                        <option value="PERSONAJES">PERSONAJES</option>
-                      </select>
+                <div class="input-search-container no-change-color md:pr-0 pr-4 flex flex-col items-center mt-5"> <!-- Cambiar aquí -->
+                    <div class="filter-container flex flex-col md:flex-row items-center justify-center md:pr-0 pr-6">
+                        <div class="pb-3 ml-0 md:ml-4"> <!-- Ajustar márgenes -->
+                            <label for="type" style="font-family: 'Bangers', cursive;">TIPO</label>
+                            <select class="sort-gral sort-type" name="type" id="marvel-select" style="font-family: 'Bangers', cursive;">
+                                <option value="COMICS" selected>COMICS</option>
+                                <option value="PERSONAJES">PERSONAJES</option>
+                            </select>
+                        </div>
+                        <div class="pb-3 ml-0 md:ml-4"> <!-- Ajustar márgenes -->
+                            <label for="order" style="font-family: 'Bangers', cursive;">ORDEN</label>
+                            <select class="sort-gral" name="order" id="sort-order" style="font-family: 'Bangers', cursive;">
+                                <option value="title">A-Z</option>
+                                <option value="-title">Z-A</option>
+                                <option value="-onsaleDate">Más nuevos</option>
+                                <option value="onsaleDate">Más viejos</option>
+                            </select>
+                        </div>
+                        <div class="flex justify-center mt-2"> <!-- Cambiar aquí -->
+                            <button id="back-to-search" class="hidden btn-search mb-4 mr-2">Volver</button>
+                            <button id="btn-search" class="btn-search mb-4 mr-8">BUSCAR</button>
+                        </div>
                     </div>
-                    <div class="pb-3 ml-8">
-                      <label for="order">ORDEN</label>
-                      <select class="sort-gral" name="order" id="sort-order">
-                        <option value="title">A-Z</option>
-                        <option value="-title">Z-A</option>
-                        <option value="-onsaleDate">Más nuevos</option>
-                        <option value="onsaleDate">Más viejos</option>
-                      </select>
-                    </div>
-                    <button id="back-to-search" class="hidden btn-search mb-5">Volver</button>
-                    <button id="btn-search" class="btn-search mb-5">BUSCAR</button>
-                  </div>
                 </div>
-              </div>
+            </div>
         </div>
 
         <div>
@@ -125,10 +128,10 @@
                             <i class="fas fa-angle-double-right text-2xl"></i>
                         </button>
                     </div>
-                    <div id="pagination-info" class="pagination-info text-center mt-4"></div>
+                    <div id="pagination-info" class="pagination-info text-center mt-4" style="font-family: 'Bangers', cursive;"></div>
                      <!-- Select para elegir una página específica -->
                      <div class="text-center mt-1">
-                        <select id="page-select" class="page-select"></select>
+                        <select id="page-select" class="page-select" style="font-family: 'Bangers', cursive;"></select>
                      </div>
                      
                     
