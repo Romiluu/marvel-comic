@@ -36,14 +36,14 @@
                     <div class="filter-container flex flex-col md:flex-row items-center justify-center md:pr-0 pr-6">
                         <div class="pb-3 ml-0 md:ml-4"> <!-- Ajustar márgenes -->
                             <label for="type" style="font-family: 'Bangers', cursive;">TIPO</label>
-                            <select class="sort-gral sort-type" name="type" id="marvel-select" style="font-family: 'Bangers', cursive;">
+                            <select class="sort-gral sort-type my-1 py-1" name="type" id="marvel-select" style="font-family: 'Bangers', cursive;">
                                 <option value="COMICS" selected>COMICS</option>
                                 <option value="PERSONAJES">PERSONAJES</option>
                             </select>
                         </div>
                         <div class="pb-3 ml-0 md:ml-4"> <!-- Ajustar márgenes -->
                             <label for="order" style="font-family: 'Bangers', cursive;">ORDEN</label>
-                            <select class="sort-gral" name="order" id="sort-order" style="font-family: 'Bangers', cursive;">
+                            <select class="sort-gral my-1 py-1" name="order" id="sort-order" style="font-family: 'Bangers', cursive;">
                                 <option value="title">A-Z</option>
                                 <option value="-title">Z-A</option>
                                 <option value="-onsaleDate">Más nuevos</option>
@@ -61,38 +61,37 @@
 
         <div>
                 <!-- detalle de comics -->
-                <section class="comic-section hidden justify-center mt-20" id="comic-details"> 
-                    <div class="flex flex-col md:flex-row justify-center">
+                <section class="comic-section hidden flex justify-center items-center mt-20" id="comic-details">
+                    <div class="flex flex-col md:flex-row justify-center items-center max-w-5xl w-full"> <!-- max-w-5xl limita el ancho máximo -->
                         <img src="" alt="Comic Cover" id="comic-image" class="comic-cover w-80 h-auto object-cover rounded-lg shadow-md" />
-                        <div class="comic-details mt-4 md:mt-0 md:ml-12">
-                            <h2 class="comic-title text-2xl font-semibold" id="comic-title"></h2> 
+                        <div class="comic-details mt-4 md:mt-0 md:ml-12 text-center md:text-left"> <!-- text-center para centrar en pantallas pequeñas -->
+                            <h2 class="comic-title text-2xl font-semibold" id="comic-title"></h2>
                             <div class="mt-2">
                                 <h3 class="text-lg font-semibold">Publicado:</h3>
-                                <p class="comic-published text-gray-700" id="comic-publication"></p> 
+                                <p class="comic-published text-gray-700" id="comic-publication"></p>
                             </div>
                             <div class="mt-2">
                                 <h3 class="text-lg font-semibold">Guionistas:</h3>
-                                <p class="comic-writers text-gray-700" id="comic-writers"></p> 
+                                <p class="comic-writers text-gray-700" id="comic-writers"></p>
                             </div>
                             <div class="mt-2">
                                 <h3 class="text-lg font-semibold">Descripción:</h3>
-                                <p class="comic-description text-gray-700" id="comic-description"></p> 
-                            </div> 
+                                <p class="comic-description text-gray-700" id="comic-description"></p>
+                            </div>
                         </div>
                     </div>
                 </section>
 
                 <!-- detalles del personaje  -->
-                <section class="comic-section hidden justify-center mt-20" id="character-details">
-                    <div class="container mx-auto px-4">
+                <section class="comic-section hidden flex justify-center items-center mt-20" id="character-details">
+                    <div class="container mx-auto px-4 max-w-5xl w-full">
                         <div class="flex flex-col md:flex-row items-start md:items-center justify-center gap-8">
                             <!-- Imagen del personaje -->
                             <img id="character-image" alt="Character Image" class="w-64 h-auto object-cover rounded-lg shadow-md" />
                             <!-- Detalles del personaje -->
-                            <div class="flex flex-col max-w-lg">
+                            <div class="flex flex-col max-w-lg text-center md:text-left">
                                 <h2 class="text-2xl font-bold mb-4" id="character-name"></h2>
-                                <p class="text-gray-700" id="character-description">
-                                </p>
+                                <p class="text-gray-700" id="character-description"></p>
                             </div>
                         </div>
                     </div>
@@ -131,11 +130,8 @@
                     <div id="pagination-info" class="pagination-info text-center mt-4" style="font-family: 'Bangers', cursive;"></div>
                      <!-- Select para elegir una página específica -->
                      <div class="text-center mt-1">
-                        <select id="page-select" class="page-select" style="font-family: 'Bangers', cursive;"></select>
-                     </div>
-                     
-                    
-                   
+                        <select id="page-select" class="page-select  my-1 py-1" style="font-family: 'Bangers', cursive;"></select>
+                     </div> 
                 </section>
         </div>
     </main>

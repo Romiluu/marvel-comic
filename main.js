@@ -29,18 +29,18 @@ let lastSearchParams = {
 
 //Función que conecta con la API
 const fetchURL = async (url) => {
-    console.log("Fetching URL:", url); // Imprime la URL para depuración
+    console.log("Fetching URL:", url); 
     try {
         const response = await fetch(url);
         if (!response.ok) {
-            console.error(`Error: ${response.status} ${response.statusText}`); // Log de error detallado
+            console.error(`Error: ${response.status} ${response.statusText}`);
             throw new Error('Error en la respuesta de la API');
         }
         const data = await response.json();
         return data; 
     } catch (error) {
         console.error('Error al realizar la petición:', error);
-        return null; // Devuelve null o algún valor predeterminado en caso de error
+        return null; 
     }
 };
 
@@ -64,24 +64,24 @@ const getApiURL = (resource) => {
 // determina el tipo de búsqueda
 const search = async () => {
     clearResults();
-    showLoader(); // Muestra el cargador
+    showLoader(); 
     const type = $('#marvel-select').value;
-    lastSearchParams.type = type; // Guardar tipo de búsqueda
+    lastSearchParams.type = type; 
     const searchInput = $('#input-search').value;
-    lastSearchParams.searchText = searchInput; // Guardar texto de búsqueda
+    lastSearchParams.searchText = searchInput; 
     const sortDropdown = $('#sort-order').value;
-    lastSearchParams.order = sortDropdown; // Guardar orden
+    lastSearchParams.order = sortDropdown; 
 
     // Ocultar las secciones de detalles cuando se realiza una nueva búsqueda
     const comicDetailsSection = $('#comic-details');
     const characterDetailsSection = $('#character-details');
 
     if (comicDetailsSection) {
-        comicDetailsSection.classList.add('hidden'); // Oculta los detalles del cómic
+        comicDetailsSection.classList.add('hidden'); 
     }
     
     if (characterDetailsSection) {
-        characterDetailsSection.classList.add('hidden'); // Oculta los detalles del personaje
+        characterDetailsSection.classList.add('hidden'); 
     }
 
     let data;
@@ -91,13 +91,13 @@ const search = async () => {
         const sortDropdown = $('#sort-order');
         const searchInput = $('#input-search');
 
-        searchParams += `&orderBy=${sortDropdown.value}`; // Incluye el orden seleccionado
+        searchParams += `&orderBy=${sortDropdown.value}`;
         if (searchInput.value.length) {
             searchParams += `&titleStartsWith=${searchInput.value}`;
         }
 
         data = await fetchURL(`${apiUrl}comics${searchParams}`);
-        console.log(data); // Imprime la respuesta de la API
+        console.log(data); 
         if (data) {
             appendComics(data.data.results);
             updateResultsCount(data.data.total);
@@ -106,13 +106,14 @@ const search = async () => {
         }
     } else if (type === 'PERSONAJES') {
         const searchInput = $('#input-search');
+        updateResultsTitle(`Resultados`)
 
         if (searchInput.value.length) {
             searchParams += `&nameStartsWith=${searchInput.value}`;
         }
 
         data = await fetchURL(`${apiUrl}characters${searchParams}`);
-        console.log(data); // Imprime la respuesta de la API
+        console.log(data); 
         if (data) {
             appendCharacters(data.data.results);
             updateResultsCount(data.data.total);
@@ -121,9 +122,10 @@ const search = async () => {
             console.error('No se pudieron obtener personajes.');
         }
     }
+    updateResultsTitle(`Resultados`)
     updatePaginationButtons(); 
     updateTotalPages(); 
-    hideLoader(); // Oculta el cargador al finalizar
+    hideLoader(); 
 };
 
 
@@ -131,7 +133,7 @@ const search = async () => {
 const appendComics = (comics) => {
     showLoader();
     const resultsContainer = $('.results');
-    resultsContainer.innerHTML = ''; // Limpiar resultados anteriores
+    resultsContainer.innerHTML = ''; 
     if (comics.length === 0) {
         resultsContainer.innerHTML = '<h2 class="no-results text-red-600">No se han encontrado resultados</h2>';
         return;
@@ -147,7 +149,7 @@ const appendComics = (comics) => {
             <h3 class="text-center text-md font-bold mt-2">${comic.title}</h3>
         `;
 
-        // Añadir evento de clic para mostrar detalles
+        
         comicCard.addEventListener('click', () => showComicDetails(comic.id));
         
         resultsContainer.append(comicCard);
@@ -191,25 +193,25 @@ async function showComicDetails(comicId) {
     showLoader();
     const comic = await fetchComic(comicId);
     if (comic) {
-        clearResults(); // Limpia los resultados
+        clearResults();
         updateComicDetails(comic);
         
         // Oculta la sección de detalles del personaje
         const characterDetailsSection = document.getElementById('character-details');
         if (characterDetailsSection) {
-            characterDetailsSection.classList.add('hidden'); // Añade la clase hidden para ocultar
+            characterDetailsSection.classList.add('hidden'); 
         }
         
         // Muestra los detalles del cómic
         const comicDetailsSection = document.getElementById('comic-details');
         if (comicDetailsSection) {
-            comicDetailsSection.classList.remove('hidden'); // Quita la clase hidden para mostrar
+            comicDetailsSection.classList.remove('hidden');
         }
     } else {
         console.error('No se pudo obtener los detalles del cómic');
     }
     hideLoader();
-    backToSearchButton.classList.remove('hidden'); // Muestra el botón "Volver"
+    backToSearchButton.classList.remove('hidden'); 
 }
 
 // Muestra detalles del personaje
@@ -223,15 +225,15 @@ async function showCharacterDetails(characterId) {
         const characterDetailsSection = $('#character-details');
         characterDetailsSection.classList.remove('hidden');
 
-        const comicDetailsSection = $('#comic-details'); // Asegúrate de tener el ID correcto para la sección de cómics
-        comicDetailsSection.classList.add('hidden'); // Oculta la sección de detalles del cómic
+        const comicDetailsSection = $('#comic-details'); 
+        comicDetailsSection.classList.add('hidden'); 
 
         
         fetchRelatedComics(characterId);
     } else {
         console.error('No se pudo obtener los detalles del personaje');
     }
-    backToSearchButton.classList.remove('hidden'); // Muestra el botón "Volver"
+    backToSearchButton.classList.remove('hidden'); 
     hideLoader();
 }
 
@@ -242,7 +244,7 @@ const fetchRelatedComics = async (characterId) => {
     const comicsData = await fetchURL(url);
 
     if (comicsData) {
-        appendComics(comicsData.data.results); // Aquí se deben mostrar los cómics
+        appendComics(comicsData.data.results); 
         updateResultsCount(comicsData.data.total);
         updateResultsTitle(`Comics del personaje`);
     }
@@ -256,11 +258,11 @@ function updateComicDetails(comic) {
     $('#comic-image').src = `${comic.thumbnail.path}/portrait_uncanny.${comic.thumbnail.extension}`;
     
     // Añadir publicación y guionistas
-    $('#comic-publication').innerText = `Publicado: ${comic.dates[0].date}`; // Asegúrate de que comic.dates tenga la información adecuada
+    $('#comic-publication').innerText = `Publicado: ${comic.dates[0].date}`;
     $('#comic-writers').innerText = `Guionistas: ${comic.creators.items.map(item => item.name).join(', ') || 'No disponible'}`;
     
     // Mostrar detalles
-    $('#comic-details').classList.remove('hidden'); // Asegúrate de mostrar la sección al cargar los detalles
+    $('#comic-details').classList.remove('hidden'); 
 
     
     fetchRelatedCharacters(comic.id);    
@@ -273,7 +275,7 @@ const fetchRelatedCharacters = async (comicId) => {
     const charactersData = await fetchURL(url);
 
     if (charactersData) {
-        appendCharacters(charactersData.data.results); // Aquí se deben mostrar los personajes
+        appendCharacters(charactersData.data.results); 
         updateResultsCount(charactersData.data.total);
         updateResultsTitle(`Personajes del cómic`);
     }
@@ -337,12 +339,12 @@ $('#btn-search').onclick = () => {
 //mostar y ocultar el loader
 const showLoader = () => {
     const loader = document.querySelector('.custom-container');
-    loader.classList.remove('hidden'); // Quita la clase hidden para mostrar el loader
+    loader.classList.remove('hidden'); 
 };
 
 const hideLoader = () => {
     const loader = document.querySelector('.custom-container');
-    loader.classList.add('hidden'); // Agrega la clase hidden para ocultar el loader
+    loader.classList.add('hidden'); 
 };
 //cambia el titulo de resultados
 const updateResultsTitle = (title) => {
@@ -353,21 +355,21 @@ const backToSearchButton = $('#back-to-search');
 // Agregar evento al botón "Volver"
 backToSearchButton.addEventListener('click', async () => {
     if (lastSearchParams.type) {
-        $('#marvel-select').value = lastSearchParams.type; // Establece el tipo de búsqueda
-        $('#input-search').value = lastSearchParams.searchText; // Establece el texto de búsqueda
-        $('#sort-order').value = lastSearchParams.order; // Establece el orden
-        offset = lastSearchParams.offset; // Establece el desplazamiento (si es necesario)
+        $('#marvel-select').value = lastSearchParams.type; 
+        $('#input-search').value = lastSearchParams.searchText; 
+        $('#sort-order').value = lastSearchParams.order; 
+        offset = lastSearchParams.offset; 
 
         await search(); // Realiza la búsqueda
-        backToSearchButton.classList.add('hidden'); // Oculta el botón después de volver
+        backToSearchButton.classList.add('hidden'); 
     }
 });
 // Función para actualizar el número total de páginas
 const updateTotalPages = () => {
-    const totalPages = Math.ceil(totalResults / pageLimit); // Calcula el total de páginas
+    const totalPages = Math.ceil(totalResults / pageLimit); 
     const pageSelect = $('#page-select');
     const paginationInfo = document.getElementById('pagination-info');
-    pageSelect.innerHTML = ''; // Limpia el select antes de llenarlo
+    pageSelect.innerHTML = ''; 
 
     paginationInfo.innerHTML = `Página ${Math.ceil(offset / pageLimit) + 1} de ${totalPages}`;
 
@@ -379,20 +381,22 @@ const updateTotalPages = () => {
         pageSelect.appendChild(option);
     }
     // Establecer el valor actual en el select
-    pageSelect.value = Math.ceil(offset / pageLimit) + 1; // Calcular la página actual
+    pageSelect.value = Math.ceil(offset / pageLimit) + 1; 
 };
 
 // Evento para seleccionar una página
 $('#page-select').addEventListener('change', (event) => {
     const selectedPage = parseInt(event.target.value);
-    const newOffset = (selectedPage - 1) * pageLimit; // Calcula el nuevo offset
-    changePage(newOffset); // Cambia a la nueva página
+    const newOffset = (selectedPage - 1) * pageLimit; 
+    changePage(newOffset); 
 });
+
 const changePage = (newOffset) => {
-    offset = newOffset; // Actualiza el offset con la nueva página
-    search(); // Vuelve a buscar con el nuevo offset
-    updatePageSelect(Math.ceil(totalResults / pageLimit)); // Actualiza el select con el nuevo total de páginas
+    offset = newOffset; 
+    search(); 
+    updatePageSelect(Math.ceil(totalResults / pageLimit)); 
 }
+
 // Función para habilitar o deshabilitar los botones de paginación
 const updatePaginationButtons = () => {
     const currentPage = Math.floor(offset / pageLimit) + 1;
@@ -408,6 +412,7 @@ const updatePaginationButtons = () => {
     const pageSelect = $('#page-select');
     pageSelect.value = currentPage;
 };
+
 // Botones de paginación
 btnFirst.addEventListener("click", () => {
     offset = 0;  // Asegúrate de usar 'offset' correctamente
