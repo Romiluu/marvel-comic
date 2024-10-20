@@ -103,11 +103,13 @@ const search = async () => {
         if (data) {
             appendCharacters(data.data.results);
             updateResultsCount(data.data.total);
+            updatePageSelect(Math.ceil(totalResults / pageLimit)); 
         } else {
             console.error('No se pudieron obtener personajes.');
         }
     }
-    updatePaginationButtons();  
+    updatePaginationButtons(); 
+    updateTotalPages(); 
     hideLoader(); // Oculta el cargador al finalizar
 };
 
@@ -330,21 +332,54 @@ const hideLoader = () => {
 //cambia el titulo de resultados
 const updateResultsTitle = (title) => {
     $('.results-title').innerHTML = title
-  }
-
-// Función para habilitar o deshabilitar los botones de paginación
-function updatePaginationButtons() {
-    const maxOffset = Math.floor((totalResults - 1) / pageLimit) * pageLimit;
-    
-    // Deshabilita el botón de la primera página si ya estamos en la primera página
-    btnFirst.disabled = (offset === 0);
-    btnPrevious.disabled = (offset === 0);
-    
-    // Deshabilita el botón de la última página si ya estamos en la última página
-    btnNext.disabled = (offset >= maxOffset);
-    btnLast.disabled = (offset >= maxOffset);
 }
 
+// Función para actualizar el número total de páginas
+const updateTotalPages = () => {
+    const totalPages = Math.ceil(totalResults / pageLimit); // Calcula el total de páginas
+    const pageSelect = $('#page-select');
+    const paginationInfo = document.getElementById('pagination-info');
+    pageSelect.innerHTML = ''; // Limpia el select antes de llenarlo
+
+    paginationInfo.innerHTML = `Página ${Math.ceil(offset / pageLimit) + 1} de ${totalPages}`;
+
+    // Llenar el select con opciones de páginas
+    for (let i = 1; i <= totalPages; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.text = `Página ${i}`;
+        pageSelect.appendChild(option);
+    }
+    // Establecer el valor actual en el select
+    pageSelect.value = Math.ceil(offset / pageLimit) + 1; // Calcular la página actual
+};
+
+// Evento para seleccionar una página
+$('#page-select').addEventListener('change', (event) => {
+    const selectedPage = parseInt(event.target.value);
+    const newOffset = (selectedPage - 1) * pageLimit; // Calcula el nuevo offset
+    changePage(newOffset); // Cambia a la nueva página
+});
+const changePage = (newOffset) => {
+    offset = newOffset; // Actualiza el offset con la nueva página
+    search(); // Vuelve a buscar con el nuevo offset
+    updatePageSelect(Math.ceil(totalResults / pageLimit)); // Actualiza el select con el nuevo total de páginas
+}
+// Función para habilitar o deshabilitar los botones de paginación
+const updatePaginationButtons = () => {
+    const currentPage = Math.floor(offset / pageLimit) + 1;
+    const totalPages = Math.ceil(totalResults / pageLimit);
+
+    // Deshabilitar o habilitar los botones según la página actual
+    btnFirst.disabled = currentPage === 1;
+    btnPrevious.disabled = currentPage === 1;
+    btnNext.disabled = currentPage === totalPages;
+    btnLast.disabled = currentPage === totalPages;
+
+    // Actualiza el select con la página actual
+    const pageSelect = $('#page-select');
+    pageSelect.value = currentPage;
+};
 // Botones de paginación
 btnFirst.addEventListener("click", () => {
     offset = 0;  // Asegúrate de usar 'offset' correctamente
