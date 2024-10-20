@@ -360,7 +360,7 @@ backToSearchButton.addEventListener('click', async () => {
         $('#sort-order').value = lastSearchParams.order; 
         offset = lastSearchParams.offset; 
 
-        await search(); // Realiza la búsqueda
+        await search(); 
         backToSearchButton.classList.add('hidden'); 
     }
 });
@@ -415,34 +415,34 @@ const updatePaginationButtons = () => {
 
 // Botones de paginación
 btnFirst.addEventListener("click", () => {
-    offset = 0;  // Asegúrate de usar 'offset' correctamente
-    search(); // Vuelve a buscar con el nuevo offset
+    offset = 0;  
+    search(); 
 });
 
 btnPrevious.addEventListener("click", () => {
     if (offset > 0) {
-        offset -= pageLimit; // Disminuye el offset
-        search(); // Vuelve a buscar
+        offset -= pageLimit; 
+        search(); 
     }
 });
 
 btnNext.addEventListener("click", () => {
     const maxOffset = Math.floor((totalResults - 1) / pageLimit) * pageLimit;
     if (offset < maxOffset) {
-        offset += pageLimit; // Aumenta el offset
-        search(); // Vuelve a buscar
+        offset += pageLimit; 
+        search(); 
     }
 });
 
 btnLast.addEventListener("click", () => {
     const maxOffset = Math.floor((totalResults - 1) / pageLimit) * pageLimit;
-    offset = maxOffset; // Establece el offset en el máximo valor
-    search(); // Vuelve a buscar
+    offset = maxOffset; 
+    search(); 
 });
   
-//carga al iniciar
+//carga al iniciar la pagina
 document.addEventListener('DOMContentLoaded', async () => {
     $('#marvel-select').value = 'COMICS'; 
-    await search(); // Llama a la función de búsqueda para cargar cómics
+    await search(); 
 });
   
