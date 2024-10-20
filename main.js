@@ -152,6 +152,8 @@ const appendCharacters = (characters) => {
           <h3 class="character-name text-md font-bold">${character.name}</h3>
         </div>
       `;
+
+      characterCard.addEventListener('click', () => showCharacterDetails(character.id));
   
       resultsContainer.append(characterCard);
     }
@@ -161,12 +163,42 @@ const appendCharacters = (characters) => {
 async function showComicDetails(comicId) {
     const comic = await fetchComic(comicId);
     if (comic) {
+        clearResults(); // Limpia los resultados
         updateComicDetails(comic);
+        
+        // Oculta la sección de resultados
+        const resultsSection = document.querySelector('.results');
+        if (resultsSection) {
+            resultsSection.classList.add('hidden'); // Añade la clase hidden para ocultar
+        }
+        
+        // Muestra los detalles del cómic
+        const comicDetailsSection = document.getElementById('comic-details');
+        if (comicDetailsSection) {
+            comicDetailsSection.classList.remove('hidden'); // Quita la clase hidden para mostrar
+        }
     } else {
         console.error('No se pudo obtener los detalles del cómic');
     }
 }
+// Muestra detalles del personaje
+async function showCharacterDetails(characterId) {
+    const character = await fetchCharacter(characterId);
+    if (character) {
+        clearResults();
+        updateCharacterDetails(character);
+        
+        const resultsSection = $('.results');
+        resultsSection.classList.add('hidden');
+        
+        const characterDetailsSection = $('#character-details');
+        characterDetailsSection.classList.remove('hidden');
+    } else {
+        console.error('No se pudo obtener los detalles del personaje');
+    }
+}
 
+// Actualiza los detalles del cómic
 function updateComicDetails(comic) {
     // Actualiza los detalles del cómic
     $('#comic-title').innerText = comic.title;
@@ -181,6 +213,15 @@ function updateComicDetails(comic) {
     $('#comic-details').classList.remove('hidden'); // Asegúrate de mostrar la sección al cargar los detalles
 }
 
+// Actualiza los detalles del personaje
+function updateCharacterDetails(character) {
+    $('#character-name').innerText = character.name;
+    $('#character-description').innerText = character.description || 'Descripción no disponible';
+    $('#character-image').src = `${character.thumbnail.path}/portrait_uncanny.${character.thumbnail.extension}`;
+    $('#character-details').classList.remove('hidden');
+}
+
+// Función para obtener los detalles del cómic
 async function fetchComic(comicId) {
     try {
         const url = `${apiUrl}comics/${comicId}?apikey=${publicKey}&ts=${ts}&hash=${hash}`;
@@ -189,9 +230,24 @@ async function fetchComic(comicId) {
             throw new Error('Error al obtener los detalles del cómic');
         }
         const data = await response.json();
-        return data.data.results[0];  // Suponiendo que la API devuelve una lista de resultados
+        return data.data.results[0]; 
     } catch (error) {
         console.error('Hubo un problema con la solicitud: ', error);
+    }
+}
+
+// Función para obtener los detalles del personaje
+async function fetchCharacter(characterId) {
+    try {
+        const url = `${apiUrl}characters/${characterId}?apikey=${publicKey}&ts=${ts}&hash=${hash}`;
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Error al obtener los detalles del personaje');
+        }
+        const data = await response.json();
+        return data.data.results[0];
+    } catch (error) {
+        console.error('Hubo un problema con la solicitud:', error);
     }
 }
 
