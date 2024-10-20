@@ -18,6 +18,14 @@ const btnPrevious = $("#previous-page");
 const btnNext = $("#next-page");
 const btnLast = $("#last-page");
 
+//almacenar y gestionar parámetros de búsqueda
+let lastSearchParams = {
+    type: '',
+    searchText: '',
+    order: '',
+    offset: 0,
+};
+
 
 //Función que conecta con la API
 const fetchURL = async (url) => {
@@ -58,6 +66,11 @@ const search = async () => {
     clearResults();
     showLoader(); // Muestra el cargador
     const type = $('#marvel-select').value;
+    lastSearchParams.type = type; // Guardar tipo de búsqueda
+    const searchInput = $('#input-search').value;
+    lastSearchParams.searchText = searchInput; // Guardar texto de búsqueda
+    const sortDropdown = $('#sort-order').value;
+    lastSearchParams.order = sortDropdown; // Guardar orden
 
     // Ocultar las secciones de detalles cuando se realiza una nueva búsqueda
     const comicDetailsSection = $('#comic-details');
@@ -196,6 +209,7 @@ async function showComicDetails(comicId) {
         console.error('No se pudo obtener los detalles del cómic');
     }
     hideLoader();
+    backToSearchButton.classList.remove('hidden'); // Muestra el botón "Volver"
 }
 
 // Muestra detalles del personaje
@@ -217,6 +231,7 @@ async function showCharacterDetails(characterId) {
     } else {
         console.error('No se pudo obtener los detalles del personaje');
     }
+    backToSearchButton.classList.remove('hidden'); // Muestra el botón "Volver"
     hideLoader();
 }
 
@@ -334,6 +349,19 @@ const updateResultsTitle = (title) => {
     $('.results-title').innerHTML = title
 }
 
+const backToSearchButton = $('#back-to-search');
+// Agregar evento al botón "Volver"
+backToSearchButton.addEventListener('click', async () => {
+    if (lastSearchParams.type) {
+        $('#marvel-select').value = lastSearchParams.type; // Establece el tipo de búsqueda
+        $('#input-search').value = lastSearchParams.searchText; // Establece el texto de búsqueda
+        $('#sort-order').value = lastSearchParams.order; // Establece el orden
+        offset = lastSearchParams.offset; // Establece el desplazamiento (si es necesario)
+
+        await search(); // Realiza la búsqueda
+        backToSearchButton.classList.add('hidden'); // Oculta el botón después de volver
+    }
+});
 // Función para actualizar el número total de páginas
 const updateTotalPages = () => {
     const totalPages = Math.ceil(totalResults / pageLimit); // Calcula el total de páginas
