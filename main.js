@@ -40,18 +40,13 @@ const fetchURL = async (url) => {
 const getApiURL = (resource) => {
     const sortDropdown = $('#sort-order');
     const searchInput = $('#input-search');
-
     let searchParams = `?apikey=${publicKey}&ts=${ts}&hash=${hash}&offset=${offset}`;
 
     if (resource === 'comics') {
         searchParams += `&orderBy=${sortDropdown.value}`;
-        if (searchInput.value.length) {
-            searchParams += `&titleStartsWith=${searchInput.value}`;
-        }
+        if (searchInput.value.length) searchParams += `&titleStartsWith=${searchInput.value}`;
     } else if (resource === 'characters') {
-        if (searchInput.value.length) {
-            searchParams += `&nameStartsWith=${searchInput.value}`;
-        }
+        if (searchInput.value.length) searchParams += `&nameStartsWith=${searchInput.value}`;
     }
 
     return `${apiUrl}${resource}${searchParams}`;
@@ -83,7 +78,7 @@ const search = async () => {
         const sortDropdown = $('#sort-order');
         const searchInput = $('#input-search');
 
-        searchParams += `&orderBy=${sortDropdown.value}`;
+        searchParams += `&orderBy=${sortDropdown.value}`; // Incluye el orden seleccionado
         if (searchInput.value.length) {
             searchParams += `&titleStartsWith=${searchInput.value}`;
         }
@@ -119,6 +114,7 @@ const search = async () => {
 
 //Función que muestra las tarjetas de los cómics
 const appendComics = (comics) => {
+    showLoader();
     const resultsContainer = $('.results');
     resultsContainer.innerHTML = ''; // Limpiar resultados anteriores
     if (comics.length === 0) {
@@ -141,13 +137,15 @@ const appendComics = (comics) => {
         
         resultsContainer.append(comicCard);
     });
+    hideLoader();
 };;
 
 // Función que muestra las tarjetas de los personajes
 const appendCharacters = (characters) => {
-    const resultsContainer = $('.results'); // Asegúrate de que esta clase sea correcta
-    resultsContainer.classList.remove('hidden'); // Asegúrate de que el contenedor esté visible
-    resultsContainer.innerHTML = ''; // Limpiar resultados anteriores
+    showLoader();
+    const resultsContainer = $('.results'); 
+    resultsContainer.classList.remove('hidden'); 
+    resultsContainer.innerHTML = ''; 
 
     if (characters.length === 0) {
         resultsContainer.innerHTML = '<h2 class="no-results text-red-600">No se han encontrado resultados</h2>';
@@ -169,6 +167,7 @@ const appendCharacters = (characters) => {
 
         resultsContainer.appendChild(characterCard);
     });
+    hideLoader();
 };
 
 
@@ -228,6 +227,7 @@ const fetchRelatedComics = async (characterId) => {
     if (comicsData) {
         appendComics(comicsData.data.results); // Aquí se deben mostrar los cómics
         updateResultsCount(comicsData.data.total);
+        updateResultsTitle(`Comics del personaje`);
     }
     hideLoader();
 };
@@ -258,6 +258,7 @@ const fetchRelatedCharacters = async (comicId) => {
     if (charactersData) {
         appendCharacters(charactersData.data.results); // Aquí se deben mostrar los personajes
         updateResultsCount(charactersData.data.total);
+        updateResultsTitle(`Personajes del cómic`);
     }
     hideLoader();
 };  
@@ -326,6 +327,10 @@ const hideLoader = () => {
     const loader = document.querySelector('.custom-container');
     loader.classList.add('hidden'); // Agrega la clase hidden para ocultar el loader
 };
+//cambia el titulo de resultados
+const updateResultsTitle = (title) => {
+    $('.results-title').innerHTML = title
+  }
 
 // Función para habilitar o deshabilitar los botones de paginación
 function updatePaginationButtons() {
