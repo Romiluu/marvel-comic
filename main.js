@@ -61,9 +61,22 @@ const getApiURL = (resource) => {
 // determina el tipo de búsqueda
 const search = async () => {
     clearResults();
+    showLoader(); // Muestra el cargador
     const type = $('#marvel-select').value;
 
-    let data; // Inicializa data fuera de la estructura condicional
+    // Ocultar las secciones de detalles cuando se realiza una nueva búsqueda
+    const comicDetailsSection = $('#comic-details');
+    const characterDetailsSection = $('#character-details');
+
+    if (comicDetailsSection) {
+        comicDetailsSection.classList.add('hidden'); // Oculta los detalles del cómic
+    }
+    
+    if (characterDetailsSection) {
+        characterDetailsSection.classList.add('hidden'); // Oculta los detalles del personaje
+    }
+
+    let data;
     let searchParams = `?apikey=${publicKey}&ts=${ts}&hash=${hash}&offset=${offset}`;
 
     if (type === 'COMICS') {
@@ -71,7 +84,6 @@ const search = async () => {
         const searchInput = $('#input-search');
 
         searchParams += `&orderBy=${sortDropdown.value}`;
-
         if (searchInput.value.length) {
             searchParams += `&titleStartsWith=${searchInput.value}`;
         }
@@ -101,7 +113,9 @@ const search = async () => {
         }
     }
     updatePaginationButtons();  
-};;
+    hideLoader(); // Oculta el cargador al finalizar
+};
+
 
 //Función que muestra las tarjetas de los cómics
 const appendComics = (comics) => {
@@ -160,6 +174,7 @@ const appendCharacters = (characters) => {
 
 //muestra detalles del comic
 async function showComicDetails(comicId) {
+    showLoader();
     const comic = await fetchComic(comicId);
     if (comic) {
         clearResults(); // Limpia los resultados
@@ -179,10 +194,12 @@ async function showComicDetails(comicId) {
     } else {
         console.error('No se pudo obtener los detalles del cómic');
     }
+    hideLoader();
 }
 
 // Muestra detalles del personaje
 async function showCharacterDetails(characterId) {
+    showLoader();
     const character = await fetchCharacter(characterId);
     if (character) {
         clearResults();
@@ -199,10 +216,12 @@ async function showCharacterDetails(characterId) {
     } else {
         console.error('No se pudo obtener los detalles del personaje');
     }
+    hideLoader();
 }
 
 // Función para buscar cómics en los que aparece el personaje
 const fetchRelatedComics = async (characterId) => {
+    showLoader();
     const url = `${apiUrl}characters/${characterId}/comics?apikey=${publicKey}&ts=${ts}&hash=${hash}`;
     const comicsData = await fetchURL(url);
 
@@ -210,6 +229,7 @@ const fetchRelatedComics = async (characterId) => {
         appendComics(comicsData.data.results); // Aquí se deben mostrar los cómics
         updateResultsCount(comicsData.data.total);
     }
+    hideLoader();
 };
 // Actualiza los detalles del cómic
 function updateComicDetails(comic) {
@@ -231,6 +251,7 @@ function updateComicDetails(comic) {
 
 // Función para buscar personajes relacionados al cómic
 const fetchRelatedCharacters = async (comicId) => {
+    showLoader();
     const url = `${apiUrl}comics/${comicId}/characters?apikey=${publicKey}&ts=${ts}&hash=${hash}`;
     const charactersData = await fetchURL(url);
 
@@ -238,6 +259,7 @@ const fetchRelatedCharacters = async (comicId) => {
         appendCharacters(charactersData.data.results); // Aquí se deben mostrar los personajes
         updateResultsCount(charactersData.data.total);
     }
+    hideLoader();
 };  
 
 // Actualiza los detalles del personaje
@@ -292,6 +314,17 @@ const updateResultsCount = (count) => {
 // Añadir el evento al botón de búsqueda
 $('#btn-search').onclick = () => {
     search();
+};
+
+//mostar y ocultar el loader
+const showLoader = () => {
+    const loader = document.querySelector('.custom-container');
+    loader.classList.remove('hidden'); // Quita la clase hidden para mostrar el loader
+};
+
+const hideLoader = () => {
+    const loader = document.querySelector('.custom-container');
+    loader.classList.add('hidden'); // Agrega la clase hidden para ocultar el loader
 };
 
 // Función para habilitar o deshabilitar los botones de paginación
