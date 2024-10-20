@@ -39,7 +39,9 @@
   
   #input-search:focus {
     border: 1px solid #902209;
-  }
+    background: linear-gradient(90deg, rgb(230, 228, 129) 0%, rgb(219, 211, 98) 35%); /* Mantener el mismo fondo */
+    color: black;
+}
   .btn-search {
     margin-left: 15px; /* Espacio entre ORDEN y BUSCAR */
     font-size: 22px;
