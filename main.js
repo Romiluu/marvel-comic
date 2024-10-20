@@ -131,33 +131,29 @@ const appendComics = (comics) => {
 
 // Función que muestra las tarjetas de los personajes
 const appendCharacters = (characters) => {
-    const resultsContainer = $('.results');
+    const resultsContainer = $('.results'); // Asegúrate de que esta clase sea correcta
+    resultsContainer.classList.remove('hidden'); // Asegúrate de que el contenedor esté visible
     resultsContainer.innerHTML = ''; // Limpiar resultados anteriores
-  
-    if (characters.length === 0) {
-      resultsContainer.innerHTML = '<h2 class="no-results text-red-600">No se han encontrado resultados</h2>';
-      return;
-    }
-  
-    for (const character of characters) {
-      const characterCard = document.createElement('div');
-      characterCard.tabIndex = 0;
-      characterCard.classList.add('character', 'bg-white', 'rounded-lg', 'shadow-lg', 'p-4', 'w-64', 'transition-transform', 'duration-300', 'transform', 'hover:scale-105', 'hover:shadow-2xl');
-  
-      characterCard.innerHTML = `
-        <div class="character-img-container bg-gray-200 p-2 rounded-t-lg">
-          <img src="${character.thumbnail.path}/portrait_uncanny.${character.thumbnail.extension}" alt="${character.name}" class="w-full h-72 object-fit rounded-lg" />
-        </div>
-        <div class="character-name-container text-center mt-2">
-          <h3 class="character-name text-md font-bold">${character.name}</h3>
-        </div>
-      `;
 
-      characterCard.addEventListener('click', () => showCharacterDetails(character.id));
-  
-      resultsContainer.append(characterCard);
+    if (characters.length === 0) {
+        resultsContainer.innerHTML = '<h2 class="no-results text-red-600">No se han encontrado resultados</h2>';
+        return;
     }
+
+    characters.forEach((character) => {
+        const characterCard = document.createElement('div');
+        characterCard.classList.add('bg-white', 'rounded-lg', 'shadow-lg', 'p-4', 'w-64', 'transition-transform', 'duration-300', 'transform', 'hover:scale-105', 'hover:shadow-2xl');
+        characterCard.innerHTML = `
+            <div class="bg-gray-200 p-2 rounded-t-lg">
+                <img src="${character.thumbnail.path}/portrait_uncanny.${character.thumbnail.extension}" alt="${character.name}" class="w-full h-72 object-fit rounded-lg" />
+            </div>
+            <h3 class="text-lg font-semibold">${character.name}</h3>
+        `; 
+
+        resultsContainer.appendChild(characterCard);
+    });
 };
+
 
 //muestra detalles del comic
 async function showComicDetails(comicId) {
@@ -181,6 +177,7 @@ async function showComicDetails(comicId) {
         console.error('No se pudo obtener los detalles del cómic');
     }
 }
+
 // Muestra detalles del personaje
 async function showCharacterDetails(characterId) {
     const character = await fetchCharacter(characterId);
@@ -211,7 +208,21 @@ function updateComicDetails(comic) {
     
     // Mostrar detalles
     $('#comic-details').classList.remove('hidden'); // Asegúrate de mostrar la sección al cargar los detalles
+
+    
+    fetchRelatedCharacters(comic.id);    
 }
+
+// Función para buscar personajes relacionados al cómic
+const fetchRelatedCharacters = async (comicId) => {
+    const url = `${apiUrl}comics/${comicId}/characters?apikey=${publicKey}&ts=${ts}&hash=${hash}`;
+    const charactersData = await fetchURL(url);
+
+    if (charactersData) {
+        appendCharacters(charactersData.data.results); // Aquí se deben mostrar los personajes
+        updateResultsCount(charactersData.data.total);
+    }
+};  
 
 // Actualiza los detalles del personaje
 function updateCharacterDetails(character) {
@@ -266,20 +277,6 @@ const updateResultsCount = (count) => {
 $('#btn-search').onclick = () => {
     search();
 };
-
-// Función para habilitar o deshabilitar los botones de paginación
-function updatePaginationButtons() {
-    const maxOffset = Math.floor((totalResults - 1) / pageLimit) * pageLimit;
-    
-    // Deshabilita el botón de la primera página si ya estamos en la primera página
-    btnFirst.disabled = (offset === 0);
-    btnPrevious.disabled = (offset === 0);
-    
-    // Deshabilita el botón de la última página si ya estamos en la última página
-    btnNext.disabled = (offset >= maxOffset);
-    btnLast.disabled = (offset >= maxOffset);
-}
-
 
 // Función para habilitar o deshabilitar los botones de paginación
 function updatePaginationButtons() {
